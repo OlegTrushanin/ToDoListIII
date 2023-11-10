@@ -25,15 +25,15 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
 
 
 
-    private OnNoteClickListener onNoteClickListener;
+//    private OnNoteClickListener onNoteClickListener;
 
     public List<Note> getNotes() {
         return notes;
     }
 
-    public void setOnNoteClickListener(OnNoteClickListener onNoteClickListener) {
-        this.onNoteClickListener = onNoteClickListener;
-    }
+//    public void setOnNoteClickListener(OnNoteClickListener onNoteClickListener) {
+//        this.onNoteClickListener = onNoteClickListener;
+//    }
 
 
     @NonNull
@@ -70,14 +70,14 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
 
         viewHolder.textViewNote.setBackgroundColor(color);
 
-        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(onNoteClickListener != null) {
-                    onNoteClickListener.onNoteClick(note);
-                }
-            }
-        });
+//        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if(onNoteClickListener != null) {
+//                    onNoteClickListener.onNoteClick(note);
+//                }
+//            }
+//        });
 
     }
 
@@ -86,11 +86,11 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
         return notes.size();
     }
 
-    interface OnNoteClickListener{
-
-        void onNoteClick(Note note);
-
-    }
+//    interface OnNoteClickListener{
+//
+//        void onNoteClick(Note note);
+//
+//    }
 
     public class NotesViewHolder extends RecyclerView.ViewHolder { // в этом классе будут определяться и храниться ссылки на textViewNote
 
