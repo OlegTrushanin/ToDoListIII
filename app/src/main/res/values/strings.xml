@@ -3,4 +3,5 @@
     <string name="addnoteedittext">Введите текст заметки</string>
     <string name="low_rg">низкий</string>
     <string name="priority_text_view">Выберите приоритет</string>
+    <string name="error_string_empty">Заполните поле заметки</string>
 </resources>
