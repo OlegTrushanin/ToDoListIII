@@ -92,6 +92,18 @@
         app:layout_constraintTop_toBottomOf="@+id/radioGroup"
         android:text="Сохранить"/>
 
+    <EditText
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:inputType="textPersonName|textMultiLine"
+        android:maxLines="10"
+        android:minLines="3"
+        android:hint="@string/addnoteedittext"
+        android:padding="20dp"
+        />
+
 
 
 
