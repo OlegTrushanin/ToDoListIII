@@ -41,6 +41,9 @@ dependencies {
     annotationProcessor("androidx.room:room-compiler:$room_version")// добавляем зависимость для работы с БД через room
     implementation("androidx.room:room-ktx:$room_version")// добавляем зависимость для работы с БД через room
     testImplementation("junit:junit:4.13.2")
+    implementation("io.reactivex.rxjava3:rxandroid:3.0.2'") // зависимость для RxJava
+    implementation("io.reactivex.rxjava3:rxjava:3.1.5")// зависимость для RxJava
+    implementation("androidx.room:room-rxjava3:$room_version")// зависимость для room RxJava
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
