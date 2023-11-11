@@ -11,6 +11,7 @@ import androidx.room.Query;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Single;
 
 @Dao
 public interface NotesDao { // прописываем запросы для работы с БД
@@ -22,7 +23,7 @@ public interface NotesDao { // прописываем запросы для ра
     Completable remove(int id);
 
     @Query("SELECT * FROM notes")
-    LiveData<List<Note>> getNotes(); //возвращает объект LiveData. Нельзя указывать конкретную коллекцию, а только List
+    Single<List<Note>> getNotes(); //возвращает объект Single
 
 
 

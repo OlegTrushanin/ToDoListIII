@@ -48,7 +48,6 @@ public class AddViewNote extends AndroidViewModel {
                 .subscribe(new Action() {// с помощью этого метода подписываемся на add и отслеживаем окончание его работы добавляя колбек Action
                     @Override //
                     public void run() throws Throwable {
-                        Log.d("AndroidViewModel","subscribe"); // выводим сообщение в логи
                         shouldCloseScreen.setValue(true);
                     }
                 });

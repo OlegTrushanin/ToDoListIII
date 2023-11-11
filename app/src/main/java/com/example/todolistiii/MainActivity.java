@@ -93,4 +93,10 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mainViewActivity.refreshList(); // при фокусе на активности, обновляем список
+    }
 }
