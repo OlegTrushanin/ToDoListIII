@@ -7,6 +7,10 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import io.reactivex.rxjava3.core.Scheduler;
+import io.reactivex.rxjava3.functions.Action;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+
 public class AddViewNote extends AndroidViewModel {
 
     DataBase dataBase;
@@ -27,15 +31,16 @@ public class AddViewNote extends AndroidViewModel {
 
     public void saveNote(Note note){
 
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                dataBase.notesDao().add(note); // добавляем запись в БД
-                shouldCloseScreen.postValue(true); // закрываем данную активность
+        dataBase.notesDao().add(note)
+                .subscribeOn(Schedulers.io())// переключаем поток на фоновый для метода add
+                .observeOn(AndroidSchedulers.mainThread()) // переключаем обратно на главный поток. Все что ниже будет выполняться в главном потоке
+                .subscribe(new Action() {// с помощью этого метода подписываемся на add и отслеживаем окончание его работы добавляя колбек Action
+                    @Override //
+                    public void run() throws Throwable {
+                        shouldCloseScreen.setValue(true);
+                    }
+                });
 
-            }
-        });
-        thread.start();
     }
 
 
