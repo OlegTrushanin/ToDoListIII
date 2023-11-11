@@ -8,10 +8,14 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import java.util.List;
+import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Scheduler;
+import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.functions.Action;
@@ -41,7 +45,7 @@ public class AddViewNote extends AndroidViewModel {
 
     public void saveNote(Note note){
 
-       Disposable disposable = dataBase.notesDao().add(note)
+       Disposable disposable = saveNoteRx(note)
                 .subscribeOn(Schedulers.io())// переключаем поток на фоновый для метода add
                 .observeOn(AndroidSchedulers.mainThread()) // переключаем обратно на главный поток. Все что ниже будет выполняться в главном потоке
                 .subscribe(new Action() {// с помощью этого метода подписываемся на add и отслеживаем окончание его работы добавляя колбек Action
@@ -51,6 +55,20 @@ public class AddViewNote extends AndroidViewModel {
                     }
                 });
        compositeDisposable.add(disposable);
+
+    }
+
+    private Completable saveNoteRx(Note note){ // создаем свой объект Single
+
+        return Completable.fromAction(new Action() {
+            @Override
+            public void run() throws Throwable {
+                dataBase.notesDao().add(note);
+            }
+        });
+
+
+
 
     }
 
