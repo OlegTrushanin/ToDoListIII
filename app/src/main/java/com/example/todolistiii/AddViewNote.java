@@ -42,7 +42,6 @@ public class AddViewNote extends AndroidViewModel {
     public void saveNote(Note note){
 
        Disposable disposable = dataBase.notesDao().add(note)
-                .delay(5, TimeUnit.SECONDS) // задержка выполнения кода на 5 секудн
                 .subscribeOn(Schedulers.io())// переключаем поток на фоновый для метода add
                 .observeOn(AndroidSchedulers.mainThread()) // переключаем обратно на главный поток. Все что ниже будет выполняться в главном потоке
                 .subscribe(new Action() {// с помощью этого метода подписываемся на add и отслеживаем окончание его работы добавляя колбек Action

@@ -29,7 +29,7 @@ public class MainViewActivity extends AndroidViewModel {
         dataBase = DataBase.getInstance(application).notesDao();
     }
 
-    LiveData<List<Note>> getNotes(){
+    public LiveData<List<Note>> getNotes(){
         return notes;
     }
 
