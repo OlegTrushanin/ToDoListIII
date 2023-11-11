@@ -1,7 +1,10 @@
 package com.example.todolistiii;
 
+import static android.provider.Settings.System.getString;
+
 import android.app.Application;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -19,7 +22,9 @@ import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.functions.Action;
+import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.schedulers.Schedulers;
+;
 
 
 
@@ -29,13 +34,25 @@ public class AddViewNote extends AndroidViewModel {
 
 
 
+
+
+
     private MutableLiveData <Boolean> shouldCloseScreen = new MutableLiveData<>();
+
+
+
+    private MutableLiveData <Boolean> toastShow = new MutableLiveData<>();
 
     private CompositeDisposable compositeDisposable = new CompositeDisposable(); // нужно чтобы удалить подписку discribeOn если сами уходим с активности
 
     public LiveData<Boolean> getShouldCloseScreen() {
         return shouldCloseScreen;
     }
+
+    public MutableLiveData<Boolean> getToastShow() {
+        return toastShow;
+    }
+
 
 
     public AddViewNote(@NonNull Application application) {
@@ -53,6 +70,13 @@ public class AddViewNote extends AndroidViewModel {
                     public void run() throws Throwable {
                         shouldCloseScreen.setValue(true);
                     }
+                }, new Consumer<Throwable>() {//обработчик ошибок
+                    @Override
+                    public void accept(Throwable throwable) throws Throwable {
+
+                        toastShow.setValue(true);
+
+                    }
                 });
        compositeDisposable.add(disposable);
 
@@ -63,7 +87,9 @@ public class AddViewNote extends AndroidViewModel {
         return Completable.fromAction(new Action() {
             @Override
             public void run() throws Throwable {
-                dataBase.notesDao().add(note);
+               // dataBase.notesDao().add(note);
+
+                throw new Exception();
             }
         });
 

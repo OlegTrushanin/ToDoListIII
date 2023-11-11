@@ -48,6 +48,19 @@ public class AddNote extends AppCompatActivity {
             }
         });
 
+        addViewNote.getToastShow().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                Toast.makeText(
+                        AddNote.this,
+                        "Отсутствует подключение к интернету",
+                        Toast.LENGTH_SHORT
+                ).show();
+            }
+        });
+
+
+
 
     }
 

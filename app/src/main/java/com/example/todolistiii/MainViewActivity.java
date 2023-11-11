@@ -46,6 +46,11 @@ public class MainViewActivity extends AndroidViewModel {
                     public void accept(List<Note> notesDromDB) throws Throwable {
                         notes.setValue(notesDromDB); // передаем полученные данные в notes
                     }
+                }, new Consumer<Throwable>() {// обработчик ошибок
+                    @Override
+                    public void accept(Throwable throwable) throws Throwable {
+
+                    }
                 });
 
         compositeDisposable.add(disposable);
@@ -71,8 +76,13 @@ public class MainViewActivity extends AndroidViewModel {
                 .subscribe(new Action() {
                     @Override
                     public void run() throws Throwable {
-                        Log.d("MainViewActivity",note.getText());
+                        Log.d("MainViewActivity", note.getText());
                         refreshList(); // обновляем данные
+
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Throwable { // обработчик ошибок
 
                     }
                 });
