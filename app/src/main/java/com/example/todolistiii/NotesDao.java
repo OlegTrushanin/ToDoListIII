@@ -19,7 +19,7 @@ public interface NotesDao { // прописываем запросы для ра
     Completable add(Note note); // возвращаемый тип Completable нужен для возможности подписки на метод, для отслеживания окончания его работы
 
     @Query("DELETE from notes WHERE id = :id" ) // удаляем строчку с указанным id
-    void remove(int id);
+    Completable remove(int id);
 
     @Query("SELECT * FROM notes")
     LiveData<List<Note>> getNotes(); //возвращает объект LiveData. Нельзя указывать конкретную коллекцию, а только List
