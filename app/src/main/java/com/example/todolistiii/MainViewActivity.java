@@ -8,6 +8,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -25,7 +26,8 @@ public class MainViewActivity extends AndroidViewModel {
 
     private NotesDao dataBase;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
-    private MutableLiveData <List<Note>> notes = new MutableLiveData<>();
+
+    List<Note> notes = new ArrayList<>();
 
     public MainViewActivity(@NonNull Application application) {
         super(application);
@@ -33,51 +35,21 @@ public class MainViewActivity extends AndroidViewModel {
     }
 
     public LiveData<List<Note>> getNotes(){
-        return notes;
+        return dataBase.getNotes();
     }
 
-    public void refreshList(){ // обновление листа с заметками
 
-        Disposable disposable = getNotesRx() //получаем заметки из БД
-                .subscribeOn(Schedulers.io()) // верхнее действие выполняем в фоновом потоке
-                .observeOn(AndroidSchedulers.mainThread())// переключаемся на основной
-                .subscribe(new Consumer<List<Note>>() {
-                    @Override
-                    public void accept(List<Note> notesDromDB) throws Throwable {
-                        notes.setValue(notesDromDB); // передаем полученные данные в notes
-                    }
-                }, new Consumer<Throwable>() {// обработчик ошибок
-                    @Override
-                    public void accept(Throwable throwable) throws Throwable {
-
-                    }
-                });
-
-        compositeDisposable.add(disposable);
-
-    }
-
-    private Single<List<Note>> getNotesRx(){ // создаем свой объект Single
-
-        return Single.fromCallable(new Callable<List<Note>>() {
-            @Override
-            public List<Note> call() throws Exception {
-                return dataBase.getNotes();
-            }
-        });
-
-    }
 
     public void remove(Note note){
 
-        Disposable disposable = removeRx(note)
+        Disposable disposable = dataBase.remove(note.getId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action() {
                     @Override
                     public void run() throws Throwable {
                         Log.d("MainViewActivity", note.getText());
-                        refreshList(); // обновляем данные
+
 
                     }
                 }, new Consumer<Throwable>() {
@@ -92,16 +64,6 @@ public class MainViewActivity extends AndroidViewModel {
 
     }
 
-    private Completable removeRx(Note note){ // Создаем объект Completable
-
-       return Completable.fromAction(new Action() {
-           @Override
-           public void run() throws Throwable {
-               dataBase.remove(note.getId());
-           }
-       });
-
-    }
 
 
 
