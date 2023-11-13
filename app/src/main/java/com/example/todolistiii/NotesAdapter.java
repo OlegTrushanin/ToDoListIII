@@ -21,6 +21,11 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
         notifyDataSetChanged();
     }
 
+    public void setNotesFilter(List<Note> notes) {
+        this.notes = notes;
+        notifyDataSetChanged();
+    }
+
     private List<Note> notes = new ArrayList<>();
 
 

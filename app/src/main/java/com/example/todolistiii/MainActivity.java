@@ -9,11 +9,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -21,9 +24,15 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerViewMain;
     FloatingActionButton floatingActionButton;
 
+    EditText inputSearch;
+
     NotesAdapter notesAdapter;
 
     MainViewActivity mainViewActivity;
+
+    List <Note> sourceList;
+
+
 
 
 
@@ -39,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         mainViewActivity.getNotes().observe(this, new Observer<List<Note>>() {
             @Override
             public void onChanged(List<Note> notes) {
+                sourceList = notes;
                 notesAdapter.setNotes(notes);
 
             }
@@ -82,21 +92,58 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        inputSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+                filterSearch(editable.toString());
+
+            }
+        });
+
 
 
     }
+
+    public void filterSearch(String text){
+
+        List <Note> filterList = new ArrayList<>();
+
+        for(Note note: sourceList){
+
+            if(note.getText().toLowerCase().contains(text)){
+                filterList.add(note);
+            }
+
+        }
+
+        notesAdapter.setNotesFilter(filterList);
+
+    }
+
+
+
+
+
+
 
 
     private void initView(){ // инициализируем ссылки на объекты
         recyclerViewMain = findViewById(R.id.recyclerViewMain);
         floatingActionButton = findViewById(R.id.floatingActionButton);
+        inputSearch = findViewById(R.id.inputSearch);
 
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-    }
 }
