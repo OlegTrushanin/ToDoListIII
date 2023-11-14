@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-        notesAdapter.setNotesFilter(filterList);
+        notesAdapter.setNotes(filterList);
 
     }
 

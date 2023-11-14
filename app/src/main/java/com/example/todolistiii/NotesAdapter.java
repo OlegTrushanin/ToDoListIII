@@ -10,6 +10,8 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -17,7 +19,9 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
 
 
     public void setNotes(List<Note> notes) {
-        this.notes = notes;
+        List<Note> reverseList = new ArrayList<>(notes);
+        Collections.reverse(reverseList);
+        this.notes = reverseList;
         notifyDataSetChanged();
     }
 
