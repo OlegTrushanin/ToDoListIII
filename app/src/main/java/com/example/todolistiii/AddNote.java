@@ -81,7 +81,7 @@ public class AddNote extends AppCompatActivity {
 
     private void save(){
 
-        String text = addNoteEditText.getText().toString();
+        String text = addNoteEditText.getText().toString().trim();
         if(text.isEmpty()){// ?Проверка на заполненность
 
             Toast.makeText(
